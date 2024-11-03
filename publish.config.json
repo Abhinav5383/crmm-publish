@@ -1,0 +1,22 @@
+{
+	"title": "Example version",
+	"version": "1.8.0",
+	"featured": false,
+	"releaseChannel": "release",
+	"loaders": ["quilt"],
+	"gameVersions": {
+		"file": "quilt.mod.json",
+		"key": "quilt_loader.depends.1.versions"
+	},
+	"files": {
+		"primary": "dist/mod-1.8.0.jar",
+		"additional": ["dist/mod-sources-1.8.0.jar"]
+	},
+
+	"repoApi": "https://api.github.com/repos/USER_NAME/REPO",
+	"gitReleaseUrl": "/releases/latest",
+	"crmm": {
+		"authToken": "YOUR_AUTH_TOKEN",
+		"projectId": "iris"
+	}
+}
