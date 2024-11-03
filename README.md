@@ -36,16 +36,16 @@ This is a JS script so you will need a JS runtime installed on your pc like [Nod
     Example: 
     ```json
     "gameVersions": ["0.3.1", "0.3.2", "0.3.3", "0.3.4"],
-
-    // ----- OR -----
-
+    ```
+    OR
+    ```json
     "gameVersions": {
         "file": "src/main/resources/quilt.mod.json",
         "key": "quilt_loader.depends.1.versions"
     }
 
-    // NOTE:- You can use numbers for array indices
     ```
+    NOTE:- You can use numbers for array indices
 
 - **files**:
     - **primary**: The primary file for the version (Required)
