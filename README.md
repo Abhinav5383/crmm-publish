@@ -2,6 +2,11 @@
 
 This is a JS script so you will need a JS runtime installed on your pc like [Node.js](https://nodejs.org/en/download/package-manager) or [Bun](https://bun.sh/).
 
+```sh
+$ node publish.js
+```
+Note: All the file paths you have specified in the script config will be relative to the directory you run the script in, so I'd suggest to define paths relative to your project's root and then run the script there.
+
 `Config`
 ```json
 {
