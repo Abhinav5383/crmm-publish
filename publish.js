@@ -147,7 +147,7 @@ async function getGameVersions(source) {
 				`Failed to get game versions from source file using key '${gameVersionSourceKey}'`,
 			);
 
-		if (!Array.isArray(gameVersions_raw)) gameVersions_raw = [gameVersions_raw];
+		if (typeof gameVersions_raw === "string") gameVersions_raw = [gameVersions_raw];
 	}
 
 	const parsedGameVersions = new Set();
