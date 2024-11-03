@@ -32,10 +32,12 @@ This is a JS script so you will need a JS runtime installed on your pc like [Nod
 
 - **loaders**: List of supported loaders (Required, [See available loaders here](https://api.crmm.tech/api/tags/loaders))
 
+- **releaseChannel**: `release | beta | alpha (Required)`
+
 - **gameVersions**: A list of supported game versions or an object containing path to a json and key to the game versions field in that json \
     Example: 
     ```json
-    "gameVersions": ["0.3.1", "0.3.2", "0.3.3", "0.3.4"],
+    "gameVersions": [">=0.3.1", "0.2.5"],
     ```
     OR
     ```json

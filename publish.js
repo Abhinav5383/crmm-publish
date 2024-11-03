@@ -12,8 +12,7 @@ const includeGameVersionTypes = [
 
 async function main() {
 	const configData = await loadConfigData();
-	console.log("Config data loaded");
-	console.log({ ...configData, authToken: "REDACTED" });
+	// console.log({ ...configData, authToken: "REDACTED" });
 
 	console.log("Preparing form data...");
 	const formData = await prepareMultipartFormData(configData);
@@ -70,7 +69,7 @@ async function loadConfigData() {
 	const featured = config.featured === true;
 	const releaseChannel = config.releaseChannel || "release";
 	const loaders = config.loaders || [];
-	const gameVersions = getGameVersions(config.gameVersions);
+	const gameVersions = await getGameVersions(config.gameVersions);
 	if (!gameVersions) {
 		throw new Error("Game versions are required");
 	}
@@ -116,8 +115,6 @@ async function loadConfigData() {
 }
 
 async function getGameVersions(source) {
-	if (Array.isArray(source)) return source;
-
 	// The API returns sorted versions list in descending order
 	const res = await fetch(`${CRMM_API_URL}/tags/game-versions`);
 	const availableVersions = await res.json();
@@ -129,21 +126,29 @@ async function getGameVersions(source) {
 		.filter((version) => includeGameVersionTypes.includes(version.releaseType))
 		.map((version) => version.value);
 
-	const gameVersionSourceKey = source.key;
-	if (!gameVersionSourceKey)
-		throw new Error("Missing field 'key' in 'gameVersions'");
-	const keys = gameVersionSourceKey.split(".");
+	let gameVersions_raw = [];
 
-	const gameVersionSourceFile = await getFileContents(source.file, "utf-8");
-	const gameVersionSourceJson = JSON.parse(gameVersionSourceFile);
+	if (Array.isArray(source)) {
+		gameVersions_raw = source;
+	} else if (typeof source === "string") {
+		gameVersions_raw = [source];
+	} else {
+		const gameVersionSourceKey = source.key;
+		if (!gameVersionSourceKey)
+			throw new Error("Missing field 'key' in 'gameVersions'");
+		const keys = gameVersionSourceKey.split(".");
 
-	let gameVersions_raw = getObjValue(gameVersionSourceJson, keys);
-	if (!gameVersions_raw)
-		throw new Error(
-			`Failed to get game versions from source file using key '${gameVersionSourceKey}'`,
-		);
+		const gameVersionSourceFile = await getFileContents(source.file, "utf-8");
+		const gameVersionSourceJson = JSON.parse(gameVersionSourceFile);
 
-	if (!Array.isArray(gameVersions_raw)) gameVersions_raw = [gameVersions_raw];
+		gameVersions_raw = getObjValue(gameVersionSourceJson, keys);
+		if (!gameVersions_raw)
+			throw new Error(
+				`Failed to get game versions from source file using key '${gameVersionSourceKey}'`,
+			);
+
+		if (!Array.isArray(gameVersions_raw)) gameVersions_raw = [gameVersions_raw];
+	}
 
 	const parsedGameVersions = new Set();
 	for (const version of gameVersions_raw) {
@@ -166,8 +171,12 @@ async function getGameVersions(source) {
 
 async function getVersionChangelog(url) {
 	console.log("Fetching changelog...");
+	let fetchUrl = url;
+	if (url.includes("/tag/")) {
+		fetchUrl = url.replace("/tag/", "/tags/");
+	}
 
-	const res = await fetch(url);
+	const res = await fetch(fetchUrl);
 	const data = await res.json();
 
 	return data?.body || "";
@@ -207,7 +216,7 @@ function parseVersion(version, refList) {
 		!versionStr.includes("<") &&
 		!versionStr.includes(">")
 	) {
-		return versionStr;
+		return [versionStr];
 	}
 
 	// Throw error if the version string doesn't start with a valid operator but includes one
