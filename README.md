@@ -45,7 +45,10 @@ This is a JS script so you will need a JS runtime installed on your pc like [Nod
         "file": "src/main/resources/quilt.mod.json",
         "key": "quilt_loader.depends.1.versions"
     }
-
+    ```
+    `src/main/resources/quilt.mod.json`
+    ```json
+    "versions": ">=0.3.1"
     ```
     NOTE:- You can use numbers for array indices
 
