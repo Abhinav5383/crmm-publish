@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 
+// Either a path to a JSON file or an object
 const CONFIG_FILE = "publish.config.json";
 const CRMM_API_URL = "https://api.crmm.tech/api";
 const includeGameVersionTypes = [
@@ -147,7 +148,8 @@ async function getGameVersions(source) {
 				`Failed to get game versions from source file using key '${gameVersionSourceKey}'`,
 			);
 
-		if (typeof gameVersions_raw === "string") gameVersions_raw = [gameVersions_raw];
+		if (typeof gameVersions_raw === "string")
+			gameVersions_raw = [gameVersions_raw];
 	}
 
 	const parsedGameVersions = new Set();
@@ -183,6 +185,10 @@ async function getVersionChangelog(url) {
 }
 
 async function getConfig() {
+	if (typeof CONFIG_FILE !== "string") {
+		return CONFIG_FILE;
+	}
+
 	const file = await getFileContents(CONFIG_FILE, "utf-8");
 	const json = JSON.parse(file);
 
