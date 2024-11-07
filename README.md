@@ -5,9 +5,24 @@ This is a JS script so you will need a JS runtime installed on your pc like [Nod
 ```sh
 $ node publish.js
 ```
+
 Note: All the file paths you have specified in the script config will be relative to the directory you run the script in, so I'd suggest to define paths relative to your project's root and then run the script there.
 
-`Config`
+## Configuration
+
+You can either define the config object directly inside the script like this: \
+(You can also use environment variables if you are defining the config in the script, use `proecess.env.VARIABLE` to access them)
+```diff
+- const CONFIG_FILE = "publish.config.json";
++ const CONFIG_FILE = {
++     title: "Example title",
++     version: "1.7.3",
++     ...
++ }
+```
+or, set the `CONFIG_FILE` variable to a json file path and define the config object in that file
+
+`publish.config.json`
 ```json
 {
 	"title": "Example version",
@@ -37,7 +52,8 @@ Note: All the file paths you have specified in the script config will be relativ
 
 - **loaders**: List of supported loaders (Required, [See available loaders here](https://api.crmm.tech/api/tags/loaders))
 
-- **releaseChannel**: `release | beta | alpha (Required)`
+- **releaseChannel**: `release | beta | alpha | *dev (Required)` \
+    *Old `dev` versions are automatically deleted when new ones are published (the current limit is 3).
 
 - **gameVersions**: A list of supported game versions or an object containing path to a json and key to the game versions field in that json \
     Example: 
