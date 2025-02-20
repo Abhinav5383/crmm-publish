@@ -323,8 +323,14 @@ async function getProps(filePath) {
 	for (const line of lines) {
 		if (line.startsWith("#") || !line.includes("=")) continue;
 
-		const [key, value] = line.split("=");
+		let [key, value] = line.split("=");
 		if (!key?.length || !value?.length) continue;
+
+		if (value.startsWith('"') && value.endsWith('"') ||
+			value.startsWith("'") && value.endsWith("'")
+		) {
+			value = value.slice(1, -1);
+		}
 
 		props[key.trim()] = value.trim();
 	}
