@@ -78,21 +78,8 @@ or, set the `CONFIG_FILE` variable to a json file path and define the config obj
     - **additional**: List of additional files (Optional, Max 10 files)
 
 - **crmm**:
-    - **authToken**: Your crmm authToken (Required, See below how to get that)
+    - **authToken**: Your crmm authToken (Required, [How to get the AuthToken](https://docs.crmm.tech/#how-to-get-the-authtoken))
     - **projectId**: The ID/Slug of the project you want to upload the version for
-
-
-### How to get the authToken
-
-*Please note that as of now there's no implementation of PATs, so we will be using your user session token for authentication.*
-
-- Visit the [api.crmm.tech](https://api.crmm.tech/api) website and open dev tools (press `ctrl` `shift` `i`), also make sure you are logged in else you'd need to [login](https://www.crmm.tech/login) first.
-- Go to the `network` tab
-- Refresh the page (`f5`)
-- Click on the first request made to the server
-- Scroll down in `headers` section and find "Cookie:"
-- Copy the `auth-token=YOUR_AUTH_TOKEN` part of the cookie.
-- There you have it, remove the `auth-token=` part and paste the rest in the config
 
 
 ### Using Environment variables
