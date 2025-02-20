@@ -93,3 +93,23 @@ or, set the `CONFIG_FILE` variable to a json file path and define the config obj
 - Scroll down in `headers` section and find "Cookie:"
 - Copy the `auth-token=YOUR_AUTH_TOKEN` part of the cookie.
 - There you have it, remove the `auth-token=` part and paste the rest in the config
+
+
+### Using Environment variables
+
+The script provides a function `getProps` that can be used to load key value paris from any .env like file \
+This can be used to structure the config with dynamic environment dependent values
+
+For example:
+```ts
+const props = await getProps("./gradle.properties");
+
+const CONFIG = {
+	title: `Mod ${props.version}`,
+	version: props.version,
+	files: {
+		primary: `mod-${props.version}.jar`,
+	},
+    // Rest of the config...
+};
+```

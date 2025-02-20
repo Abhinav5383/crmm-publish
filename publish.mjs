@@ -1,7 +1,30 @@
 import { readFile } from "node:fs/promises";
 
+// Load key value pairs from any .env like file
+// const props = await getProps("gradle.properties");
+
 // Either a path to a JSON file or an object
-const CONFIG_FILE = "publish.config.json";
+// const CONFIG = "publish.config.json";
+const CONFIG = {
+	title: "Mod 0.1.5",
+	version: "0.1.5",
+	featured: true,
+	releaseChannel: "beta",
+	loaders: ["quilt"],
+	gameVersions: [">=0.3.1", "0.2.4"],
+	files: {
+		primary: "mod-1.5.0.jar",
+		// additional: ["mod-sources-1.5.0.jar"]
+	},
+
+	repoApi: "https://api.github.com/repos/USER_NAME/REPO",
+	gitReleaseUrl: "/releases/latest",
+	crmm: {
+		authToken: "YOUR_AUTH_TOKEN",
+		projectId: "PROJECT_ID"
+	}
+};
+
 const CRMM_API_URL = "https://api.crmm.tech/api";
 const includeGameVersionTypes = [
 	"release",
@@ -13,7 +36,7 @@ const includeGameVersionTypes = [
 
 async function main() {
 	const configData = await loadConfigData();
-	// console.log({ ...configData, authToken: "REDACTED" });
+	console.log({ ...configData, authToken: "_REDACTED_" });
 
 	console.log("Preparing form data...");
 	const formData = await prepareMultipartFormData(configData);
@@ -185,11 +208,11 @@ async function getVersionChangelog(url) {
 }
 
 async function getConfig() {
-	if (typeof CONFIG_FILE !== "string") {
-		return CONFIG_FILE;
+	if (typeof CONFIG !== "string") {
+		return CONFIG;
 	}
 
-	const file = await getFileContents(CONFIG_FILE, "utf-8");
+	const file = await getFileContents(CONFIG, "utf-8");
 	const json = JSON.parse(file);
 
 	return json;
@@ -287,4 +310,24 @@ function getObjValue(obj, keys) {
 	}
 
 	return curr;
+}
+
+async function getProps(filePath) {
+	const file = await getFileContents(filePath, "utf-8");
+	if (!file) return undefined;
+
+	// Parse the .env file
+	const props = {};
+
+	const lines = file.split("\n");
+	for (const line of lines) {
+		if (line.startsWith("#") || !line.includes("=")) continue;
+
+		const [key, value] = line.split("=");
+		if (!key?.length || !value?.length) continue;
+
+		props[key.trim()] = value.trim();
+	}
+
+	return props;
 }
