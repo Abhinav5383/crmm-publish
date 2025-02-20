@@ -326,13 +326,17 @@ async function getProps(filePath) {
 		let [key, value] = line.split("=");
 		if (!key?.length || !value?.length) continue;
 
-		if (value.startsWith('"') && value.endsWith('"') ||
+		key = key.trim();
+		value = value.trim();
+
+		if (
+			value.startsWith('"') && value.endsWith('"') ||
 			value.startsWith("'") && value.endsWith("'")
 		) {
 			value = value.slice(1, -1);
 		}
 
-		props[key.trim()] = value.trim();
+		props[key] = value;
 	}
 
 	return props;
