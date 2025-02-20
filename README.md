@@ -97,7 +97,7 @@ or, set the `CONFIG_FILE` variable to a json file path and define the config obj
 
 ### Using Environment variables
 
-The script provides a function `getProps` that can be used to load key value paris from any .env like file \
+The script provides a function `getProps` that can be used to load key value pairs from any .env like file \
 This can be used to structure the config with dynamic environment dependent values
 
 For example:
