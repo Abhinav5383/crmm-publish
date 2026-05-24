@@ -25,7 +25,7 @@ const CONFIG = {
 	}
 };
 
-const CRMM_API_URL = "https://api.crmm.tech/api";
+const CRMM_API_URL = "https://api.crmods.org/api";
 const includeGameVersionTypes = [
 	"release",
 	"beta",
