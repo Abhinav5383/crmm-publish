@@ -1,4 +1,4 @@
-## A simple script to publish your project versions to [CRMM](https://www.crmm.tech)
+## A simple script to publish your project versions to [CRMM](https://www.crmods.org)
 
 This is a JS script so you will need a JS runtime installed on your pc like [Node.js](https://nodejs.org/en/download/package-manager) or [Bun](https://bun.sh/).
 
@@ -50,7 +50,7 @@ or, set the `CONFIG_FILE` variable to a json file path and define the config obj
 
 - **title**: The title of the version (Optional, uses the `version` by default)
 
-- **loaders**: List of supported loaders (Required, [See available loaders here](https://api.crmm.tech/api/tags/loaders))
+- **loaders**: List of supported loaders (Required, [See available loaders here](https://api.crmods.org/api/tags/loaders))
 
 - **releaseChannel**: `release | beta | alpha | *dev (Required)` \
     *Old `dev` versions are automatically deleted when new ones are published (the current limit is 3).
@@ -78,7 +78,7 @@ or, set the `CONFIG_FILE` variable to a json file path and define the config obj
     - **additional**: List of additional files (Optional, Max 10 files)
 
 - **crmm**:
-    - **authToken**: Your crmm authToken (Required, [How to get the AuthToken](https://docs.crmm.tech/#how-to-get-the-authtoken))
+    - **authToken**: Your crmm authToken (Required, [How to get the AuthToken](https://docs.crmods.org/#how-to-get-the-authtoken))
     - **projectId**: The ID/Slug of the project you want to upload the version for
 
 
