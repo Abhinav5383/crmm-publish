@@ -1,5 +1,8 @@
 ## A simple script to publish your project versions to [CRMM](https://www.crmods.org)
 
+Version upload api docs: https://docs.crmods.org/version/upload.html
+
+
 This is a JS script so you will need a JS runtime installed on your pc like [Node.js](https://nodejs.org/en/download/package-manager) or [Bun](https://bun.sh/).
 
 ```sh
